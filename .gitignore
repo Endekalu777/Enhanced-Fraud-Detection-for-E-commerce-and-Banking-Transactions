@@ -65,4 +65,6 @@ site/
 .DS_Store
 Thumbs.db
 
+# sensitive data
+data/
 
