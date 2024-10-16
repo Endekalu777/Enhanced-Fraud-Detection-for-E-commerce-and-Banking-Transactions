@@ -30,6 +30,7 @@ pip-wheel-metadata/
 *.err
 .env
 .env.*
+logging/
 
 # Unit test / coverage results
 .coverage
