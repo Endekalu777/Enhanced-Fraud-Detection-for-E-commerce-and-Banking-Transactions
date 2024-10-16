@@ -4,14 +4,23 @@ import logging
 import logging
 from IPython.display import display
 import warnings
+import os
+import sys
 
 # Ignore FutureWarnings and UserWarnings
 warnings.filterwarnings("ignore", category=FutureWarning)
 warnings.filterwarnings("ignore", category=UserWarning)
 
 
-# Configure logging to display in Jupyter notebook
-logging.basicConfig(filename = 'logging/data_preprocessing.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+# Ensure the logging directory exists
+log_directory = 'logging'
+if not os.path.exists(log_directory):
+    os.makedirs(log_directory)
+
+# Configure logging to save in a logging file
+logging.basicConfig(filename=os.path.join(log_directory, 'data_preprocessing.log'),
+                    level=logging.INFO,
+                    format='%(asctime)s - %(levelname)s - %(message)s')
 
 class pre_processing():
     def __init__(self, filepath):
