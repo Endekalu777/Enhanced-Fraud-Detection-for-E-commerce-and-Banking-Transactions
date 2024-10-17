@@ -78,3 +78,29 @@ class pre_processing():
         except Exception as e:
             logging.error(f"Error displaying the missing values of the dataset: {e}")
 
+    # method to remove duplicates and Correct data types
+    def data_cleaning(self):
+        logging.info("Starting data cleaning process")
+        try:
+            # Remove dupliates
+            self.df.drop_duplicates(inplace = True)
+            logging.info("Completed removing duplicates")
+
+            # Correct data types
+            if 'signup_time' in self.df.columns:
+                self.df['signup_time'] = pd.to_datetime(self.df['signup_time'])
+                logging.info("Converted 'signup_time' to datetime")
+                
+            if 'purchase_time' in self.df.columns:
+                self.df['purchase_time'] = pd.to_datetime(self.df['purchase_time'])
+                logging.info("Converted 'purchase_time' to datetime.")
+
+            if 'ip_address' in self.df.columns:
+                self.df['ip_address'] = self.df['ip_address'].astype(int) # Convert IP addresses from float to int for better compatibility
+                logging.info("Converted 'ip_address' from float to integer")
+
+        except Exception as e:
+            logging.info(f"Error during data cleaning: {e}")
+
+
+
