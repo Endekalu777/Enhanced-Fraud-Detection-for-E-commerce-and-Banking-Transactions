@@ -31,6 +31,7 @@ def get_log_file_name(filepath):
 
 class pre_processing():
     def __init__(self, filepath):
+        self.filepath = filepath
         log_file_path = get_log_file_name(filepath)
         # Configure logging to append if the file exists
         logging.basicConfig(filename=log_file_path,
@@ -121,6 +122,32 @@ class pre_processing():
 
         except Exception as e:
             logging.info(f"Error during data cleaning: {e}")
+
+    def get_suitable_columns(self):
+        """
+        Identify which columns are suitable for univariate and bivariate analysis 
+        based on the specific dataset.
+        """
+        dataset_name = os.path.basename(self.filepath).lower()  # Access the filepath directly from the class attribute
+
+        # Define columns that are not suitable for univariate or bivariate analysis
+        unsuitable_columns = []
+
+        # Check the dataset name and assign unsuitable columns accordingly
+        if 'credit' in dataset_name.lower():
+            unsuitable_columns = ['Time'] + [f'V{i}' for i in range(1, 29)]
+        elif 'ip' in dataset_name.lower():
+            unsuitable_columns = ['lower_bound_ip_address', 'upper_bound_ip_address']
+        elif 'fraud' in dataset_name.lower():
+            unsuitable_columns = ['user_id', 'device_id', 'ip_address']
+
+        # Suitable columns for analysis are those not in the unsuitable list
+        suitable_columns = [col for col in self.df.columns if col not in unsuitable_columns]
+        
+        logging.info(f"Identified suitable columns for analysis in {dataset_name}: {suitable_columns} for univariate and bivariate analysis")
+        return suitable_columns
+
+
 
 
 
