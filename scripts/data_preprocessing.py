@@ -264,5 +264,16 @@ class pre_processing():
                     plt.xlabel('Class')
                     plt.show()
 
+                # Analyzing time-based patterns if the dataset contains timestamps
+                if 'purchase_time' in self.df.columns and 'class' in self.df.columns:
+                    self.df['hour_of_day'] = self.df['purchase_time'].dt.hour
+                    plt.figure(figsize=(10, 6))
+                    sns.countplot(x='hour_of_day', hue='class', data=self.df)
+                    plt.title('Transactions by Hour of Day and Fraud Class')
+                    plt.ylabel('Count')
+                    plt.xlabel('Hour of Day')
+                    plt.legend(title='Class')
+                    plt.show()
+
         except Exception as e:
             logging.error(f"Error during bivariate analysis: {e}")
