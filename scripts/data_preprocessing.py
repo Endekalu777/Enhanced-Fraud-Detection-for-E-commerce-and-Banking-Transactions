@@ -234,3 +234,25 @@ class pre_processing():
 
             except Exception as e:
                 logging.error(f"Error during univariate analysis for column {col}: {e}")
+
+    def bivariate_analysis(self):
+        """
+        Perform bivariate analysis between key features in the dataset.
+        Includes analysis on 'Amount', 'Class', and other relevant features.
+        """
+        logging.info("Starting bivariate analysis")
+        
+        dataset_name = os.path.basename(self.filepath).lower()
+        
+        try:
+            # Bivariate analysis for Fraud_Data.csv
+            if 'fraud' in dataset_name:
+                if 'purchase_value' in self.df.columns and 'class' in self.df.columns:
+                    plt.figure(figsize=(10, 6))
+                    sns.boxplot(x='class', y='purchase_value', data=self.df)
+                    plt.title('Boxplot of Purchase Value by Class')
+                    plt.ylabel('Purchase Value')
+                    plt.xlabel('Class')
+                    plt.show()
+        except Exception as e:
+            logging.error(f"Error during bivariate analysis: {e}")
