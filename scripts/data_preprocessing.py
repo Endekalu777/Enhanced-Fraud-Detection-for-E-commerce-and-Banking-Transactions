@@ -254,5 +254,15 @@ class pre_processing():
                     plt.ylabel('Purchase Value')
                     plt.xlabel('Class')
                     plt.show()
+
+                # Analyze age distribution by fraud class
+                if 'age' in self.df.columns and 'class' in self.df.columns:
+                    plt.figure(figsize=(10, 6))
+                    sns.boxplot(x='class', y='age', data=self.df)
+                    plt.title('Boxplot of Age by Fraud Class')
+                    plt.ylabel('Age')
+                    plt.xlabel('Class')
+                    plt.show()
+
         except Exception as e:
             logging.error(f"Error during bivariate analysis: {e}")
