@@ -275,5 +275,17 @@ class pre_processing():
                     plt.legend(title='Class')
                     plt.show()
 
+            # Bivariate analysis for creditcard.csv
+            elif 'credit' in dataset_name:
+                if 'Amount' in self.df.columns and 'Class' in self.df.columns:
+                    plt.figure(figsize=(10, 6))
+                    sns.boxplot(x='Class', y='Amount', data=self.df)
+                    plt.title('Boxplot of Amount by Class')
+                    plt.ylabel('Amount')
+                    plt.xlabel('Class')
+                    plt.show()
+
+                
+
         except Exception as e:
             logging.error(f"Error during bivariate analysis: {e}")
