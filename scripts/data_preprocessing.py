@@ -284,6 +284,27 @@ class pre_processing():
                     plt.ylabel('Amount')
                     plt.xlabel('Class')
                     plt.show()
+                    
+                    # Calculate correlation between Amount and Class
+                    correlation = self.df[['Amount', 'Class']].corr().iloc[0, 1]
+                    print(f"Correlation between Amount and Class: {correlation:.2f}")
+
+                    correlation_matrix = self.df[['Amount', 'Class']].corr()
+
+                    plt.figure(figsize=(8, 6))
+                    sns.heatmap(correlation_matrix, annot=True, fmt=".2f", cmap='coolwarm', square=True, cbar_kws={"shrink": .8})
+                    plt.title('Correlation Heatmap Between Amount and Class')
+                    plt.show()
+
+                    # Optional: Visualize the relationship between Amount and Class
+                    plt.figure(figsize=(10, 6))
+                    sns.scatterplot(x='Amount', y='Class', data=self.df)
+                    plt.title('Scatter Plot of Amount vs Class')
+                    plt.xlabel('Amount')
+                    plt.ylabel('Class')
+                    plt.show()
+        except Exception as e:
+            logging.error(f"Error during bivariate analysis: {e}")
 
                 
 
