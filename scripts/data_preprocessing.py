@@ -139,17 +139,98 @@ class pre_processing():
         elif 'ip' in dataset_name.lower():
             unsuitable_columns = ['lower_bound_ip_address', 'upper_bound_ip_address']
         elif 'fraud' in dataset_name.lower():
-            unsuitable_columns = ['user_id', 'device_id', 'ip_address']
+            unsuitable_columns = ['user_id', 'device_id', 'ip_address', 'signup_time', 'purchase_time']
 
         # Suitable columns for analysis are those not in the unsuitable list
         suitable_columns = [col for col in self.df.columns if col not in unsuitable_columns]
         
         logging.info(f"Identified suitable columns for analysis in {dataset_name}: {suitable_columns} for univariate and bivariate analysis")
         return suitable_columns
+    
+    def univariate_analysis(self):
+        """
+        Perform univariate analysis specifically for 'Amount' and 'Class' columns 
+        in any dataset where they exist. Optimize for efficiency without redundant checks.
+        """
+        logging.info("Starting univariate analysis")
+
+        # Check if 'Amount' exists in the dataset for a histogram plot
+        if 'Amount' in self.df.columns:
+            try:
+                logging.info("Performing histplot for 'Amount' column")
+                print("\nUnivariate Analysis for: Amount")
+
+                # Plot the distribution of 'Amount' with optimized bins for better visibility
+                plt.figure(figsize=(10, 6))
+                sns.histplot(self.df['Amount'], bins=50, kde=True)  # Adjust bins as needed
+                plt.title("Distribution of Amount")
+                plt.xlabel('Amount')
+                plt.ylabel('Frequency')
+                plt.show()  # Ensure the plot is displayed
+
+                # Display summary statistics for 'Amount'
+                print(self.df['Amount'].describe())
+
+            except Exception as e:
+                logging.error(f"Error during univariate analysis for 'Amount': {e}")
 
 
 
+        # Check if 'Class' exists in the dataset for a bar plot
+        if 'Class' in self.df.columns:
+            try:
+                logging.info("Performing bar plot for 'Class' column")
+                print("\nUnivariate Analysis for: Class")
+
+                # Bar plot for 'Class' column
+                plt.figure(figsize=(10, 6))
+                sns.countplot(x=self.df['Class'], order=self.df['Class'].value_counts().index)  # Order by counts
+                plt.title("Class Distribution")
+                plt.xlabel('Class')
+                plt.ylabel('Count')
+                plt.show()  # Ensure the plot is displayed
+
+                # Display value counts for 'Class'
+                print(self.df['Class'].value_counts())
+
+            except Exception as e:
+                logging.error(f"Error during univariate analysis for 'Class': {e}")
 
 
+        # Perform univariate analysis on other suitable columns
+        suitable_columns = self.get_suitable_columns()
 
+        # Remove 'Amount' and 'Class' from the list since they have already been processed
+        suitable_columns = [col for col in suitable_columns if col not in ['Amount', 'Class']]
 
+        # Process other columns for univariate analysis
+        for col in suitable_columns:
+            try:
+                logging.info(f"Performing univariate analysis for column: {col}")
+                print(f"\nUnivariate Analysis for: {col}")
+
+                if self.df[col].dtype in ['int64', 'float64']:
+                    # Numeric columns - plot distribution
+                    plt.figure(figsize=(10, 6))
+                    sns.histplot(self.df[col], kde=True)
+                    plt.title(f"Distribution of {col}")
+                    plt.xlabel(col)
+                    plt.ylabel('Frequency')
+                    plt.show()
+
+                    # Display summary statistics
+                    print(self.df[col].describe())
+                else:
+                    # Categorical columns - plot value counts
+                    plt.figure(figsize=(10, 6))
+                    sns.countplot(x=self.df[col], order=self.df[col].value_counts().index)  # Order by counts
+                    plt.title(f"Count plot of {col}")
+                    plt.xlabel(col)
+                    plt.ylabel('Count')
+                    plt.show()
+
+                    # Display value counts
+                    print(self.df[col].value_counts())
+
+            except Exception as e:
+                logging.error(f"Error during univariate analysis for column {col}: {e}")
