@@ -95,5 +95,19 @@ class TestPreProcessing(unittest.TestCase):
         log_directory = os.path.join(parent_directory, 'logging')
         self.assertTrue(os.path.exists(log_directory))
     
+    def test_logging_file_creation(self):
+        """Test if the log file is created correctly."""
+        log_file_name = f"data_preprocessing_test_dataset.log"
+        parent_directory = os.path.dirname(os.getcwd())
+        log_file_path = os.path.join(parent_directory, 'logging', log_file_name)
+        
+        # Trigger a log entry
+        logging.info("Test log entry")
+        
+        self.assertTrue(os.path.exists(log_file_path))
+
+if __name__ == '__main__':
+    unittest.main()
+
 
 
