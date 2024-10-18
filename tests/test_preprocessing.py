@@ -40,4 +40,9 @@ class TestPreProcessing(unittest.TestCase):
         if os.path.exists(cls.test_file):
             os.remove(cls.test_file)
 
+    def test_data_loading(self):
+        """Test if data is loaded correctly without errors."""
+        self.assertIsInstance(self.processor.df, pd.DataFrame)
+        self.assertEqual(self.processor.df.shape, (4, 9)) 
+
 
