@@ -116,10 +116,15 @@ class pre_processing():
                 self.df['purchase_time'] = pd.to_datetime(self.df['purchase_time'])
                 logging.info("Converted 'purchase_time' to datetime.")
 
-            if 'ip_address' in self.df.columns:
-                self.df['ip_address'] = self.df['ip_address'].astype(int) # Convert IP addresses from float to int for better compatibility
-                logging.info("Converted 'ip_address' from float to integer")
-
+            for column in ['lower_bound_ip_address', 'upper_bound_ip_address']:
+                if column in self.df.columns:
+                        # Ensure the column is a float before conversion and handle missing values
+                        if self.df[column].dtype == 'float64':
+                            # Convert IP addresses from float to integer, handling NaNs appropriately
+                            self.df[column] = self.df[column].fillna(0).astype(int)
+                            logging.info(f"Converted '{column}' from float to integer, with missing values handled.")
+                        else:
+                            logging.warning(f"'{column}' is not of type float64, skipping conversion.")
         except Exception as e:
             logging.info(f"Error during data cleaning: {e}")
 
