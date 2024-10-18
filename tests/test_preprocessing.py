@@ -89,4 +89,11 @@ class TestPreProcessing(unittest.TestCase):
         except Exception as e:
             self.fail(f"bivariate_analysis() raised an exception: {e}")
 
+    def test_logging_directory_creation(self):
+        """Test if the logging directory is created correctly."""
+        parent_directory = os.path.dirname(os.getcwd())
+        log_directory = os.path.join(parent_directory, 'logging')
+        self.assertTrue(os.path.exists(log_directory))
+    
+
 
