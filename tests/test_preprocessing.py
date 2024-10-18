@@ -79,4 +79,14 @@ class TestPreProcessing(unittest.TestCase):
         except Exception as e:
             self.fail(f"univariate_analysis() raised an exception: {e}")
 
+    def test_bivariate_analysis(self):
+        """Test if bivariate analysis executes without errors."""
+        try:
+            with patch('matplotlib.pyplot.show') as mock_show:  # Mock plt.show
+                self.processor.bivariate_analysis()
+                mock_show.assert_not_called()  
+            plt.close('all')  
+        except Exception as e:
+            self.fail(f"bivariate_analysis() raised an exception: {e}")
+
 
