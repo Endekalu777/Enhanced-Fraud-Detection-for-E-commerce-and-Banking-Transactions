@@ -52,6 +52,21 @@ class TestPreProcessing(unittest.TestCase):
         except Exception as e:
             self.fail(f"data_overview() raised an exception: {e}")
 
+    def test_data_cleaning(self):
+        """Test if data cleaning removes duplicates and converts data types correctly."""
+        self.processor.data_cleaning()
+        
+        # Check if duplicates were removed (assuming there are no duplicates in the mock data)
+        self.assertEqual(self.processor.df.shape, (4, 9))  
+
+        # Check if datetime conversion worked
+        self.assertTrue(pd.api.types.is_datetime64_any_dtype(self.processor.df['signup_time']))
+        self.assertTrue(pd.api.types.is_datetime64_any_dtype(self.processor.df['purchase_time']))
+
+        # Check if IP addresses were converted to integers
+        self.assertTrue(pd.api.types.is_integer_dtype(self.processor.df['lower_bound_ip_address']))
+        self.assertTrue(pd.api.types.is_integer_dtype(self.processor.df['upper_bound_ip_address']))
+
 
 
 
