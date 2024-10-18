@@ -45,4 +45,13 @@ class TestPreProcessing(unittest.TestCase):
         self.assertIsInstance(self.processor.df, pd.DataFrame)
         self.assertEqual(self.processor.df.shape, (4, 9)) 
 
+    def test_data_overview(self):
+        """Test if the data overview methods execute without errors."""
+        try:
+            self.processor.data_overview()
+        except Exception as e:
+            self.fail(f"data_overview() raised an exception: {e}")
+
+
+
 
