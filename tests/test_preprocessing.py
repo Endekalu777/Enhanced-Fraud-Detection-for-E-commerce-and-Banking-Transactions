@@ -33,3 +33,11 @@ class TestPreProcessing(unittest.TestCase):
         # Turn off interactive plotting
         plt.ioff()
 
+    @classmethod
+    def tearDownClass(cls):
+        """Run once after all tests."""
+        # Remove the test file after tests complete
+        if os.path.exists(cls.test_file):
+            os.remove(cls.test_file)
+
+
