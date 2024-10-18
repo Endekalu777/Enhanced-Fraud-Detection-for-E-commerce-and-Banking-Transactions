@@ -9,7 +9,7 @@ from datetime import datetime
 import os
 
 
-# Ignore FutureWarnings and UserWarnings
+# Suppress specific warnings(FutureWarnings and UserWarnings) to reduce unnecessary output during analysis.
 warnings.filterwarnings("ignore", category=FutureWarning)
 warnings.filterwarnings("ignore", category=UserWarning)
 
@@ -30,6 +30,11 @@ def get_log_file_name(filepath):
     return log_file_path
 
 class pre_processing():
+    """
+    Class for preprocessing and analyzing datasets.
+    Includes methods for loading data, cleaning, univariate/bivariate analysis, 
+    and logging for easy tracking of operations.
+    """
     def __init__(self, filepath):
         self.filepath = filepath
         log_file_path = get_log_file_name(filepath)
@@ -99,8 +104,13 @@ class pre_processing():
         except Exception as e:
             logging.error(f"Error displaying the missing values of the dataset: {e}")
 
-    # method to remove duplicates and Correct data types
+
     def data_cleaning(self):
+        """
+        Cleans the dataset by removing duplicates and correcting data types for specific columns
+        such as 'signup_time', 'purchase_time', and IP addresses.
+        Logs every step of the process for traceability.
+        """
         logging.info("Starting data cleaning process")
         try:
             # Remove dupliates
@@ -301,7 +311,7 @@ class pre_processing():
                     plt.title('Correlation Heatmap Between Amount and Class')
                     plt.show()
 
-                    # Optional: Visualize the relationship between Amount and Class
+                    # Visualize the relationship between Amount and Class
                     plt.figure(figsize=(10, 6))
                     sns.scatterplot(x='Amount', y='Class', data=self.df)
                     plt.title('Scatter Plot of Amount vs Class')
@@ -312,6 +322,3 @@ class pre_processing():
             logging.error(f"Error during bivariate analysis: {e}")
 
                 
-
-        except Exception as e:
-            logging.error(f"Error during bivariate analysis: {e}")
