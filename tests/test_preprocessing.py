@@ -2,6 +2,7 @@ import pandas as pd
 import unittest
 import numpy as np
 import matplotlib.pyplot as plt
+from unittest.mock import patch, MagicMock
 from scripts.data_preprocessing import *
 
 class TestPreProcessing(unittest.TestCase):
@@ -67,6 +68,15 @@ class TestPreProcessing(unittest.TestCase):
         self.assertTrue(pd.api.types.is_integer_dtype(self.processor.df['lower_bound_ip_address']))
         self.assertTrue(pd.api.types.is_integer_dtype(self.processor.df['upper_bound_ip_address']))
 
-
+    def test_univariate_analysis(self):
+        """Test if univariate analysis runs without errors."""
+        try:
+            with patch('matplotlib.pyplot.show') as mock_show:  
+                self.processor.univariate_analysis()
+                # Check how many times plt.show() was called
+                self.assertGreater(mock_show.call_count, 0, "plt.show() was not called.")
+            plt.close('all')  
+        except Exception as e:
+            self.fail(f"univariate_analysis() raised an exception: {e}")
 
 
