@@ -126,7 +126,7 @@ class pre_processing():
                 self.df['purchase_time'] = pd.to_datetime(self.df['purchase_time'])
                 logging.info("Converted 'purchase_time' to datetime.")
 
-            for column in ['lower_bound_ip_address', 'upper_bound_ip_address']:
+            for column in ['lower_bound_ip_address', 'upper_bound_ip_address', 'ip_address']:
                 if column in self.df.columns:
                         # Ensure the column is a float before conversion and handle missing values
                         if self.df[column].dtype == 'float64':
