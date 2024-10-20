@@ -1,5 +1,6 @@
 import os
 import logging
+import pandas as pd
 
 # Get the current working directory
 current_directory = os.getcwd()
@@ -15,4 +16,9 @@ logging.basicConfig(filename=log_file,
                             format='%(asctime)s - %(levelname)s - %(message)s',
                             filemode='a')
 
+class merge_dataset():
+    def init(self, file_path1, file_path2):
+        self.df1 = pd.read_csv(file_path1)
+        self.df2 = pd.read_csv(file_path2)
 
+    
