@@ -21,4 +21,11 @@ class merge_dataset():
         self.df1 = pd.read_csv(file_path1)
         self.df2 = pd.read_csv(file_path2)
 
+    def merge_df(self):
+        return pd.concat([self.df1, self.df2], ignore_index = True)
+    def save_merged_data(self, save_location):
+        merged_data = self.merge_df()
+        merged_data.to_csv(save_location, index = False)
+        print(f"Merged data saved to {save_location}")
+
     
