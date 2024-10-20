@@ -34,15 +34,25 @@ class MergeDataset:
             logging.error(f"Error loading datasets: {e}")
             raise
 
-    def merge_df(self):
-        # Merge the dataframes and log the operation
-        logging.info("Merging datasets.")
+    def match_ip_to_country(self):
+        logging.info("Matching IP addresses to countries.")
         try:
-            merged_data = pd.concat([self.df1, self.df2], ignore_index=True)
-            logging.info("Datasets merged successfully")
-            return merged_data
+            # Convert IP addresses in fraud_data to integer
+            self.fraud_data['ip_address'] = self.fraud_data['ip_address'].astype(float).astype(int)
+
+            # Function to find the country based on IP address range
+            def find_country(ip):
+                country_row = self.ip_data[(self.ip_data['lower_bound_ip_address'] <= ip) & (self.ip_data['upper_bound_ip_address'] >= ip)]
+                if not country_row.empty:
+                    return country_row['country'].values[0]
+                return 'Unknown'
+
+            # Apply the matching function to fraud_data
+            self.fraud_data['country'] = self.fraud_data['ip_address'].apply(find_country)
+
+            logging.info("IP address matching completed successfully.")
         except Exception as e:
-            logging.error(f"Error merging datasets: {e}")
+            logging.error(f"Error during IP address matching: {e}")
             raise
 
     def save_merged_data(self, save_location):
