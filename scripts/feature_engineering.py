@@ -28,4 +28,8 @@ class FeatureEngineering:
         # Scale Amount in creditcard_df
         self.creditcard_df['Amount'] = self.scaler.fit_transform(self.creditcard_df[['Amount']])
 
+    def encode_categorical_features(self):
+        # One-hot encode categorical columns in fraud_df
+        self.fraud_df = pd.get_dummies(self.fraud_df, columns=['browser', 'sex', 'country'], drop_first=True)
+
         
