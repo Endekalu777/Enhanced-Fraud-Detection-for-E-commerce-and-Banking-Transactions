@@ -20,4 +20,12 @@ class FeatureEngineering:
         self.fraud_df['hour_of_day'] = self.fraud_df['purchase_time'].dt.hour
         self.fraud_df['day_of_week'] = self.fraud_df['purchase_time'].dt.weekday
 
-    
+    def scale_features(self):
+        # Features to scale in fraud_df
+        features_to_scale_fraud = ['purchase_value', 'transaction_frequency', 'time_diff', 'hour_of_day']
+        self.fraud_df[features_to_scale_fraud] = self.scaler.fit_transform(self.fraud_df[features_to_scale_fraud])
+
+        # Scale Amount in creditcard_df
+        self.creditcard_df['Amount'] = self.scaler.fit_transform(self.creditcard_df[['Amount']])
+
+        
