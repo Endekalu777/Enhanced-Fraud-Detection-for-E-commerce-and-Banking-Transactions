@@ -30,8 +30,16 @@ class FeatureEngineering:
         self.creditcard_df['Amount'] = self.scaler.fit_transform(self.creditcard_df[['Amount']])
 
     def encode_categorical_features(self):
-        # One-hot encode categorical columns in fraud_df
-        self.fraud_df = pd.get_dummies(self.fraud_df, columns=['browser', 'sex', 'country'], drop_first=True)
+        # Frequency encoding for the 'country' column
+        country_frequency = self.fraud_df['country'].value_counts(normalize=True)  # Get frequency of each country
+        self.fraud_df['country_encoded'] = self.fraud_df['country'].map(country_frequency)  # Map frequencies to the column
+
+        # One-hot encode other categorical columns (like 'browser' and 'sex')
+        self.fraud_df = pd.get_dummies(self.fraud_df, columns=['browser', 'sex'], drop_first=True)
+
+        # Drop the original 'country' column if no longer needed
+        self.fraud_df.drop('country', axis=1, inplace=True)
+
 
     def save_cleaned_data(self, fraud_output_file, creditcard_output_file):
         # Save cleaned datasets
