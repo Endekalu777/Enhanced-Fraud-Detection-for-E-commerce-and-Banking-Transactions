@@ -1,12 +1,14 @@
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
+import joblib
 
 class FeatureEngineering:
     def __init__(self, fraud_file, creditcard_file):
         # Load datasets
         self.fraud_df = pd.read_csv(fraud_file)
         self.creditcard_df = pd.read_csv(creditcard_file)
-        self.scaler = StandardScaler()
+        self.fraud_scaler = StandardScaler()
+        self.creditcard_scaler = StandardScaler()
 
     def compute_transaction_features(self):
         self.fraud_df['purchase_time'] = pd.to_datetime(self.fraud_df['purchase_time'], errors='coerce')
@@ -24,10 +26,10 @@ class FeatureEngineering:
     def scale_features(self):
         # Features to scale in fraud_df
         features_to_scale_fraud = ['purchase_value', 'transaction_frequency', 'time_diff', 'hour_of_day']
-        self.fraud_df[features_to_scale_fraud] = self.scaler.fit_transform(self.fraud_df[features_to_scale_fraud])
+        self.fraud_df[features_to_scale_fraud] = self.fraud_scaler.fit_transform(self.fraud_df[features_to_scale_fraud])
 
-        # Scale Amount in creditcard_df
-        self.creditcard_df['Amount'] = self.scaler.fit_transform(self.creditcard_df[['Amount']])
+        # Scale Amount and Time in creditcard_df
+        self.creditcard_df[['Amount', 'Time']] = self.creditcard_scaler.fit_transform(self.creditcard_df[['Amount', 'Time']])
 
     def encode_categorical_features(self):
         # Frequency encoding for the 'country' column
@@ -45,7 +47,12 @@ class FeatureEngineering:
         # Save cleaned datasets
         self.fraud_df.to_csv(fraud_output_file, index=False)
         self.creditcard_df.to_csv(creditcard_output_file, index=False)
-        print("Feature engineering, scaling, and encoding complete! Cleaned datasets saved.")
+
+        # Save scalers
+        joblib.dump(self.fraud_scaler, '../models/fraud_scaler.pkl')
+        joblib.dump(self.creditcard_scaler, '../models/creditcard_scaler.pkl')
+
+        print("Feature engineering, scaling, and encoding complete! Cleaned datasets and scalers saved.")
 
     def process_data(self, fraud_output_file='../data/cleaned_merged_fraud.csv', 
                      creditcard_output_file='../data/cleaned_creditcard.csv'):
