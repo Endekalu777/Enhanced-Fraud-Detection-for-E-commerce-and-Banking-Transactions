@@ -28,6 +28,15 @@ This script provides a comprehensive tool for data preprocessing and analysis, p
 - seaborn
 - IPython
 
+## folder structure
+```
+├── scripts/
+│   ├──__init__.py
+│   ├── data_preprocessing.py
+│   └── feature_engineering.py
+│   ├──merge_dataset.py
+│   ├──README.md
+```
 ## Usage
 
 1. Import the `pre_processing` class from the script:
