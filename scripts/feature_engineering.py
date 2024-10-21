@@ -9,6 +9,7 @@ class FeatureEngineering:
         self.scaler = StandardScaler()
 
     def compute_transaction_features(self):
+        self.fraud_df['purchase_time'] = pd.to_datetime(self.fraud_df['purchase_time'], errors='coerce')
         # Transaction frequency: Count of transactions per user
         self.fraud_df['transaction_frequency'] = self.fraud_df.groupby('user_id')['user_id'].transform('count')
 
@@ -38,8 +39,8 @@ class FeatureEngineering:
         self.creditcard_df.to_csv(creditcard_output_file, index=False)
         print("Feature engineering, scaling, and encoding complete! Cleaned datasets saved.")
 
-    def process_data(self, fraud_output_file='cleaned_merged_fraud_with_ipaddress.csv', 
-                     creditcard_output_file='cleaned_creditcard.csv'):
+    def process_data(self, fraud_output_file='../data/cleaned_merged_fraud.csv', 
+                     creditcard_output_file='../data/cleaned_creditcard.csv'):
         self.compute_transaction_features()
         self.scale_features()
         self.encode_categorical_features()
