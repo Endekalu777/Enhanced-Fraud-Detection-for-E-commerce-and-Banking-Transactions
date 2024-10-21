@@ -32,4 +32,18 @@ class FeatureEngineering:
         # One-hot encode categorical columns in fraud_df
         self.fraud_df = pd.get_dummies(self.fraud_df, columns=['browser', 'sex', 'country'], drop_first=True)
 
+    def save_cleaned_data(self, fraud_output_file, creditcard_output_file):
+        # Save cleaned datasets
+        self.fraud_df.to_csv(fraud_output_file, index=False)
+        self.creditcard_df.to_csv(creditcard_output_file, index=False)
+        print("Feature engineering, scaling, and encoding complete! Cleaned datasets saved.")
+
+    def process_data(self, fraud_output_file='cleaned_merged_fraud_with_ipaddress.csv', 
+                     creditcard_output_file='cleaned_creditcard.csv'):
+        self.compute_transaction_features()
+        self.scale_features()
+        self.encode_categorical_features()
+        self.save_cleaned_data(fraud_output_file, creditcard_output_file)
+
+
         
