@@ -76,8 +76,7 @@ class ModelTraining():
         models = {
             'Logistic Regression': LogisticRegression(max_iter=1000),
             'Decision Tree': DecisionTreeClassifier(),
-            'Random Forest': RandomForestClassifier(),
-            'Gradient Boosting': GradientBoostingClassifier()
+            'Random Forest': RandomForestClassifier()
         }
 
         # Hyperparameter grids
@@ -93,12 +92,8 @@ class ModelTraining():
             'Random Forest': {
                 'n_estimators': [50, 100, 200],
                 'max_depth': [None, 5, 10, 15, 20]
-            },
-            'Gradient Boosting': {
-                'n_estimators': [50, 100, 200],
-                'learning_rate': [0.01, 0.1, 0.2],
-                'max_depth': [3, 5, 7]
             }
+            
         }
 
         for name, model in models.items():
