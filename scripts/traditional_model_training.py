@@ -1,7 +1,11 @@
 import os
 import logging
 import pandas as pd
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from sklearn.metrics import accuracy_score
 
 
 # Get the current working directory
@@ -65,3 +69,49 @@ class ModelTraining():
         except Exception as e:
             logging.error(f"Error during data preparation: {e}")
             raise
+
+    def train_creditcard_models(self):
+        logging.info("Starting model training on Credit Card dataset...")
+        print("Training models on Credit Card dataset...")
+        models = {
+            'Logistic Regression': LogisticRegression(max_iter=1000),
+            'Decision Tree': DecisionTreeClassifier(),
+            'Random Forest': RandomForestClassifier(),
+            'Gradient Boosting': GradientBoostingClassifier()
+        }
+
+        # Hyperparameter grids
+        param_grids = {
+            'Logistic Regression': {
+                'C': [0.001, 0.01, 0.1, 1, 10],
+                'solver': ['liblinear', 'saga']
+            },
+            'Decision Tree': {
+                'max_depth': [None, 5, 10, 15, 20],
+                'min_samples_split': [2, 5, 10]
+            },
+            'Random Forest': {
+                'n_estimators': [50, 100, 200],
+                'max_depth': [None, 5, 10, 15, 20]
+            },
+            'Gradient Boosting': {
+                'n_estimators': [50, 100, 200],
+                'learning_rate': [0.01, 0.1, 0.2],
+                'max_depth': [3, 5, 7]
+            }
+        }
+
+        for name, model in models.items():
+            logging.info(f"Training {name} with GridSearchCV...")
+            try:
+                print(f"Training {name} with GridSearchCV...")
+                grid_search = GridSearchCV(model, param_grids[name], cv=5, n_jobs=-1)
+                grid_search.fit(self.X_train_cc, self.y_train_cc)
+                best_model = grid_search.best_estimator_
+                y_pred = best_model.predict(self.X_test_cc)
+                accuracy = accuracy_score(self.y_test_cc, y_pred)
+                logging.info(f"{name} Best Accuracy: {accuracy:.4f} with parameters {grid_search.best_params_}")
+                print(f"{name} Best Accuracy on Credit Card Dataset: {accuracy:.4f} with parameters {grid_search.best_params_}")
+            except Exception as e:
+                logging.error(f"Error training {name}: {e}")
+                raise
