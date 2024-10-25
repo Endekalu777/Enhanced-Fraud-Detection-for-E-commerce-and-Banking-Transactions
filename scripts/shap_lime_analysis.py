@@ -1,6 +1,8 @@
 import pickle
 import pandas as pd
 import shap
+import lime
+import lime.lime_tabular
 
 # Load your models
 model_names = [
@@ -38,6 +40,28 @@ def shap_analysis(model, X, model_name):
     shap.force_plot(explainer.expected_value, shap_values[0], X.iloc[0])
     
     # Dependence Plot for a specific feature (update with feature_name)
-    feature_name = "feature_name"  # Update with a relevant feature
+    feature_name = "feature_name" 
     print(f"SHAP Dependence Plot for {feature_name} in {model_name}")
     shap.dependence_plot(feature_name, shap_values[1], X)
+
+# Function to perform LIME analysis
+def lime_analysis(model, X, model_name):
+    lime_explainer = lime.lime_tabular.LimeTabularExplainer(
+        training_data=np.array(X),
+        feature_names=X.columns,
+        class_names=['Class 0', 'Class 1'],  
+        mode='classification'
+    )
+
+    # Explain a specific prediction (first instance)
+    instance_to_explain = X.iloc[0]
+    exp = lime_explainer.explain_instance(
+        data_row=instance_to_explain,
+        predict_fn=model.predict_proba
+    )
+    
+    # Feature Importance Plot
+    print(f"LIME Feature Importance Plot for {model_name} (first instance)")
+    exp.as_pyplot_figure()
+    plt.title(f'LIME Feature Importance for {model_name}')
+    plt.show()
