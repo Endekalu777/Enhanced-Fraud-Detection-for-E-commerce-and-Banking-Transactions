@@ -3,6 +3,7 @@ import pandas as pd
 import shap
 import lime
 import lime.lime_tabular
+import matplotlib.pyplot as plt
 
 # Load your models
 model_names = [
