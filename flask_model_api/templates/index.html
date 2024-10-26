@@ -139,68 +139,84 @@
 </head>
 <body>
     <div class="container">
+        <!-- Header with Welcome Message -->
         <div class="header">
             <h1>Welcome to Smart Prediction Service</h1>
             <p>Our service uses advanced machine learning models to help predict fraud in real-time. Please enter the required information to get started.</p>
         </div>
+
+        <!-- Fraud Prediction Form -->
+        <form action="/predict/fraud" method="post">
+            <h2>Fraud Prediction Form</h2>
+            <label for="signup_time">Signup Time:</label>
+            <input type="text" name="signup_time" required placeholder="Enter signup time in epoch seconds">
+
+            <label for="purchase_time">Purchase Time:</label>
+            <input type="text" name="purchase_time" required placeholder="Enter purchase time in epoch seconds">
+
+            <label for="purchase_value">Purchase Value:</label>
+            <input type="text" name="purchase_value" required placeholder="Enter purchase value">
+
+            <label for="age">Age:</label>
+            <input type="text" name="age" required placeholder="Enter age">
+
+            <label for="ip_address">IP Address:</label>
+            <input type="text" name="ip_address" required placeholder="Enter IP address">
+
+            <label for="hour_of_day">Hour of Day:</label>
+            <input type="text" name="hour_of_day" required placeholder="Enter hour of day (0-23)">
+
+            <label for="transaction_frequency">Transaction Frequency:</label>
+            <input type="text" name="transaction_frequency" required placeholder="Enter transaction frequency">
+
+            <label for="time_diff">Time Difference:</label>
+            <input type="text" name="time_diff" required placeholder="Enter time difference">
+
+            <label for="day_of_week">Day of Week:</label>
+            <input type="text" name="day_of_week" required placeholder="Enter day of week (0-6)">
+
+            <label for="country_encoded">Country Encoded:</label>
+            <input type="text" name="country_encoded" required placeholder="Enter country encoded value (e.g., 0.3841455344380327)">
+
+            <!-- Browser Fields -->
+            <label for="browser_FireFox">Browser (FireFox):</label>
+            <input type="text" name="browser_FireFox" required placeholder="Enter 1 for Yes, 0 for No">
+
+            <label for="browser_IE">Browser (IE):</label>
+            <input type="text" name="browser_IE" required placeholder="Enter 1 for Yes, 0 for No">
+
+            <label for="browser_Opera">Browser (Opera):</label>
+            <input type="text" name="browser_Opera" required placeholder="Enter 1 for Yes, 0 for No">
+
+            <label for="browser_Safari">Browser (Safari):</label>
+            <input type="text" name="browser_Safari" required placeholder="Enter 1 for Yes, 0 for No">
+
+            <label for="sex_M">Sex (Male):</label>
+            <input type="text" name="sex_M" required placeholder="Enter 1 for Male, 0 for Female">
+
+            <label for="source_Direct">Source (Direct):</label>
+            <input type="text" name="source_Direct" required placeholder="Enter 1 for Direct, 0 for Other">
+
+            <label for="source_SEO">Source (SEO):</label>
+            <input type="text" name="source_SEO" required placeholder="Enter 1 for SEO, 0 for Other">
+
+            <button type="submit">Predict Fraud</button>
+        </form>
+
+        <!-- Display Fraud Prediction Result -->
+        {% if fraud_prediction is defined %}
+            <div class="result">
+                <p><strong>Fraud Prediction:</strong> {{ fraud_prediction }}</p>
+            </div>
+        {% endif %}
     </div>
 
-    <!-- Fraud Prediction Form -->
-    <form action="/predict/fraud" method="post">
-        <h2>Fraud Prediction Form</h2>
-        <label for="signup_time">Signup Time:</label>
-        <input type="text" name="signup_time" required placeholder="Enter signup time in epoch seconds">
-
-        <label for="purchase_time">Purchase Time:</label>
-        <input type="text" name="purchase_time" required placeholder="Enter purchase time in epoch seconds">
-
-        <label for="purchase_value">Purchase Value:</label>
-        <input type="text" name="purchase_value" required placeholder="Enter purchase value">
-
-        <label for="age">Age:</label>
-        <input type="text" name="age" required placeholder="Enter age">
-
-        <label for="ip_address">IP Address:</label>
-        <input type="text" name="ip_address" required placeholder="Enter IP address">
-
-        <label for="hour_of_day">Hour of Day:</label>
-        <input type="text" name="hour_of_day" required placeholder="Enter hour of day (0-23)">
-
-        <label for="transaction_frequency">Transaction Frequency:</label>
-        <input type="text" name="transaction_frequency" required placeholder="Enter transaction frequency">
-
-        <label for="time_diff">Time Difference:</label>
-        <input type="text" name="time_diff" required placeholder="Enter time difference">
-
-        <label for="day_of_week">Day of Week:</label>
-        <input type="text" name="day_of_week" required placeholder="Enter day of week (0-6)">
-
-        <label for="country_encoded">Country Encoded:</label>
-        <input type="text" name="country_encoded" required placeholder="Enter country encoded value (e.g., 0.3841455344380327)">
-
-        <!-- Browser Fields -->
-        <label for="browser_FireFox">Browser (FireFox):</label>
-        <input type="text" name="browser_FireFox" required placeholder="Enter 1 for Yes, 0 for No">
-
-        <label for="browser_IE">Browser (IE):</label>
-        <input type="text" name="browser_IE" required placeholder="Enter 1 for Yes, 0 for No">
-
-        <label for="browser_Opera">Browser (Opera):</label>
-        <input type="text" name="browser_Opera" required placeholder="Enter 1 for Yes, 0 for No">
-
-        <label for="browser_Safari">Browser (Safari):</label>
-        <input type="text" name="browser_Safari" required placeholder="Enter 1 for Yes, 0 for No">
-
-        <label for="sex_M">Sex (Male):</label>
-        <input type="text" name="sex_M" required placeholder="Enter 1 for Male, 0 for Female">
-
-        <label for="source_Direct">Source (Direct):</label>
-        <input type="text" name="source_Direct" required placeholder="Enter 1 for Direct, 0 for Other">
-
-        <label for="source_SEO">Source (SEO):</label>
-        <input type="text" name="source_SEO" required placeholder="Enter 1 for SEO, 0 for Other">
-
-        <button type="submit">Predict Fraud</button>
-    </form>
+    <div class="footer">
+        <p>Connect with me on social media:</p>
+        <div class="social-icons">
+            <a href="https://www.linkedin.com/in/endekalu-simon-haile/" target="_blank"><i class="fab fa-linkedin"></i></a>
+        </div>
+        <p>&copy; 2024 Endekalu Simon. All rights reserved.</p>
+    </div>
 </body>
 </html>
