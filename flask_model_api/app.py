@@ -9,7 +9,7 @@ from flask.logging import default_handler
 app = Flask(__name__)
 
 # Load models
-with open('../models/random_forest_fraud_model.pkl', 'rb') as f:
+with open('models/random_forest_fraud_model.pkl', 'rb') as f:
     fraud_model = pickle.load(f)
 
 # Set up logging
