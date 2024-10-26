@@ -52,3 +52,6 @@ def predict_fraud():
         return render_template('index.html', fraud_prediction=fraud_prediction_label)
     except Exception as e:
         return jsonify({"error": str(e)}), 400
+
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0')
