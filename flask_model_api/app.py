@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify, render_template
 import pandas as pd
 import pickle
+import struct
+import socket
 
 app = Flask(__name__)
 
@@ -8,12 +10,22 @@ app = Flask(__name__)
 with open('../models/random_forest_fraud_model.pkl', 'rb') as f:
     fraud_model = pickle.load(f)
 
+def ip_to_int(ip):
+    try:
+        return struct.unpack("!I", socket.inet_aton(ip))[0]
+    except socket.error:
+        return None
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
 @app.route('/predict/fraud', methods=['POST'])
 def predict_fraud():
     try:
         # Create DataFrame with features relevant to the model
         data = {
-            'ip_address': float(request.form['ip_address']),
+            'ip_address': ip_to_int(request.form['ip_address']),
             'purchase_value': float(request.form['purchase_value']),
             'transaction_frequency': float(request.form['transaction_frequency']),
             'time_diff': float(request.form['time_diff']),
