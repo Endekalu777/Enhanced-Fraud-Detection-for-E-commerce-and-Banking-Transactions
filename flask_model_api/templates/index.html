@@ -5,6 +5,137 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Prediction Service</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* General Reset */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Body Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: linear-gradient(to right, #f5f7fa, #d2e3fc);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Container and Header */
+        .container {
+            width: 90%;
+            max-width: 700px;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        /* Form Styling */
+        form {
+            background-color: #fafafa;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        form h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+            border-bottom: 2px solid #4CAF50;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            color: #666;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
+        button {
+            margin-top: 15px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+        }
+
+        /* Result Display */
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f1f8e9;
+            color: #4CAF50;
+            border: 1px solid #c8e6c9;
+            border-radius: 5px;
+            font-size: 1.2em;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: auto;
+            padding: 20px;
+            font-size: 0.9em;
+            color: #777;
+        }
+
+        .social-icons i {
+            margin: 0 10px;
+            color: #4CAF50;
+            font-size: 1.5em;
+            transition: color 0.3s;
+        }
+
+        .social-icons i:hover {
+            color: #45a049;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
