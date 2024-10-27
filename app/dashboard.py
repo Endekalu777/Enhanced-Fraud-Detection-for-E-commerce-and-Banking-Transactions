@@ -2,6 +2,8 @@ from dash import Dash, html, dcc
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output
 import requests
+import plotly.express as px
+import pandas as pd
 
 # Initialize Dash
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
@@ -95,3 +97,16 @@ def update_summary(n):
         f"{data['total_fraud_cases']:,}",
         f"{data['fraud_percentage']}%"
     )
+
+@app.callback(
+    Output('time-series-graph', 'figure'),
+    Input('interval-component', 'n_intervals')
+)
+def update_time_series(n):
+    response = requests.get(f"{API_BASE_URL}/time-series")
+    data = pd.DataFrame(response.json())
+    
+    fig = px.line(data, x='month_year', y='count',
+                  title='Fraud Cases Over Time',
+                  labels={'count': 'Number of Fraud Cases', 'month_year': 'Date'})
+    return fig
