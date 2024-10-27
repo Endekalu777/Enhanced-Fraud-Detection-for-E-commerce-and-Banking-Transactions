@@ -93,4 +93,4 @@ Endekalu Simon
 
 This project utilizes Dash for the dashboard interface and Flask for the backend API. Special thanks to 10academy for providing the dataset and challenge for API design.
 
-*Note: This represents the 5th branch of the project, which includes specific features for the Fraud Detection Dashboard.* 😊
+*Note: This represents the "task5" branch of the project, which includes specific features for the Fraud Detection Dashboard.* 😊
