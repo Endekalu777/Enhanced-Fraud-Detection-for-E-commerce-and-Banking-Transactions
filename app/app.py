@@ -28,3 +28,11 @@ def get_time_series():
     fraud_over_time.columns = ['month_year', 'count']
     
     return jsonify(fraud_over_time.to_dict(orient='records'))
+
+@app.route('/api/device-stats', methods=['GET'])
+def get_device_stats():
+    device_fraud = df[df['class'] == 1].groupby('device_id').size().reset_index()
+    device_fraud.columns = ['device_id', 'count']
+    device_fraud = device_fraud.sort_values('count', ascending=False).head(10)
+    
+    return jsonify(device_fraud.to_dict(orient='records'))
