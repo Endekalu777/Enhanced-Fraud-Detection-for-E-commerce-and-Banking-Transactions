@@ -1,8 +1,9 @@
 from dash import Dash, html, dcc
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output
-import requests
 import plotly.express as px
+import plotly.graph_objects as go
+import requests
 import pandas as pd
 
 # Initialize Dash
