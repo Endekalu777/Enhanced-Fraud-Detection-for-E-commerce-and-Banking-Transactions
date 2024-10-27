@@ -1,5 +1,7 @@
 from dash import Dash, html, dcc
 import dash_bootstrap_components as dbc
+from dash.dependencies import Input, Output
+import requests
 
 # Initialize Dash
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
@@ -77,3 +79,19 @@ app.layout = html.Div([
         n_intervals=0
     )
 ])
+
+# Callbacks
+@app.callback(
+    [Output("total-transactions", "children"),
+     Output("total-fraud-cases", "children"),
+     Output("fraud-percentage", "children")],
+    Input('interval-component', 'n_intervals')
+)
+def update_summary(n):
+    response = requests.get(f"{API_BASE_URL}/summary")
+    data = response.json()
+    return (
+        f"{data['total_transactions']:,}",
+        f"{data['total_fraud_cases']:,}",
+        f"{data['fraud_percentage']}%"
+    )
