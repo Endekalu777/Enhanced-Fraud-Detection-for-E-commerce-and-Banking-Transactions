@@ -123,3 +123,19 @@ def update_device_graph(n):
                  title='Top Devices by Fraud Cases',
                  labels={'count': 'Number of Fraud Cases', 'device_id': 'Device ID'})
     return fig
+
+@app.callback(
+    Output('browser-graph', 'figure'),
+    Input('interval-component', 'n_intervals')
+)
+def update_browser_graph(n):
+    response = requests.get(f"{API_BASE_URL}/browser-stats")
+    data = pd.DataFrame(response.json())
+    
+    fig = px.bar(data, x='browser', y='count',
+                 title='Fraud Cases by Browser',
+                 labels={'count': 'Number of Fraud Cases', 'browser': 'Browser'})
+    return fig
+
+if __name__ == '__main__':
+    app.run_server(debug=True, port=8050)
