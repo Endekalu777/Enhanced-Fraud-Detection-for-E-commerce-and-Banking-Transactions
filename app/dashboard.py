@@ -110,3 +110,16 @@ def update_time_series(n):
                   title='Fraud Cases Over Time',
                   labels={'count': 'Number of Fraud Cases', 'month_year': 'Date'})
     return fig
+
+@app.callback(
+    Output('device-graph', 'figure'),
+    Input('interval-component', 'n_intervals')
+)
+def update_device_graph(n):
+    response = requests.get(f"{API_BASE_URL}/device-stats")
+    data = pd.DataFrame(response.json())
+    
+    fig = px.bar(data, x='device_id', y='count',
+                 title='Top Devices by Fraud Cases',
+                 labels={'count': 'Number of Fraud Cases', 'device_id': 'Device ID'})
+    return fig
