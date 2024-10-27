@@ -21,3 +21,10 @@ def get_summary():
         'total_fraud_cases': total_fraud_cases,
         'fraud_percentage': round(fraud_percentage, 2)
     })
+
+@app.route('/api/time-series', methods=['GET'])
+def get_time_series():
+    fraud_over_time = df[df['class'] == 1].groupby('month_year').size().reset_index()
+    fraud_over_time.columns = ['month_year', 'count']
+    
+    return jsonify(fraud_over_time.to_dict(orient='records'))
