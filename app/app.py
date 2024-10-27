@@ -36,3 +36,13 @@ def get_device_stats():
     device_fraud = device_fraud.sort_values('count', ascending=False).head(10)
     
     return jsonify(device_fraud.to_dict(orient='records'))
+
+@app.route('/api/browser-stats', methods=['GET'])
+def get_browser_stats():
+    browser_fraud = df[df['class'] == 1].groupby('browser').size().reset_index()
+    browser_fraud.columns = ['browser', 'count']
+    
+    return jsonify(browser_fraud.to_dict(orient='records'))
+
+if __name__ == '__main__':
+    app.run(debug=True, port=5000)
