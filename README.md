@@ -10,7 +10,7 @@ This project aims to build a comprehensive fraud detection and analysis system. 
 
 ## Project Structure
 ```
-Enhanced-Fraud-Detection-for-E-commerce-and-Banking-Transactionst/
+Enhanced-Fraud-Detection-for-E-commerce-and-Banking-Transactions/
 ├── app/+
 │ ├── README.md
 │ ├── init.py
