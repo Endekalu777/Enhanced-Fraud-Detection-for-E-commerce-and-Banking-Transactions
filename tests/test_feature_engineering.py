@@ -66,7 +66,8 @@ class TestFeatureEngineering(unittest.TestCase):
         fraud_df = self.feature_engineering.fraud_df
         
         # Check if one-hot encoding has been applied
-        self.assertIn('browser_Chrome', fraud_df.columns)
+        self.assertIn('browser_Firefox', fraud_df.columns)
+        self.assertIn('browser_Safari', fraud_df.columns)
         self.assertIn('sex_Male', fraud_df.columns)
         self.assertIn('country_USA', fraud_df.columns)
 
